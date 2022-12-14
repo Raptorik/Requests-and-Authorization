@@ -1,4 +1,4 @@
-package core
+package handlers
 
 import (
 	"bytes"
@@ -40,12 +40,10 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetGithubClientID() string {
-
 	GitHubClientID, exists := os.LookupEnv("7fed1fa2614ad27b52e5")
 	if !exists {
 		log.Fatal("Github Client ID not defined in .env file")
 	}
-
 	return GitHubClientID
 }
 
@@ -63,8 +61,8 @@ func GitGHubLoginHandler(w http.ResponseWriter, r *http.Request) {
 	// Create the dynamic redirect URL for login
 	redirectURL := fmt.Sprintf(
 		"https://github.com/login/oauth/authorize?client_id=%s&redirect_uri=%s",
-		githubClientID,
-		"http://localhost:3000/login/github/callback"
+		GetGitHubAccessToken,
+		"http://localhost:3000/login/github/callback",
 	)
 
 	http.Redirect(w, r, redirectURL, 301)
@@ -81,7 +79,7 @@ func GetGitHubAccessToken(code string) string {
 	clientSecret := GetGitHubClientSecret()
 	// Set us the request body as JSON
 	requestBodyMap := map[string]string{
-		"7fed1fa2614ad27b52e5": clientID,
+		"7fed1fa2614ad27b52e5":                     clientID,
 		"401052219a5e1a0f51da2b829a5419fc42167164": clientSecret,
 		"code": code,
 	}
@@ -91,7 +89,7 @@ func GetGitHubAccessToken(code string) string {
 	req, reqerr := http.NewRequest(
 		"POST",
 		"https://github.com/login/oauth/access_token",
-		bytes.NewBuffer(requestJSON)
+		bytes.NewBuffer(requestJSON),
 	)
 	if reqerr != nil {
 		log.Panic("Request creation failed")
@@ -129,7 +127,7 @@ func GetGitHubData(accessToken string) string {
 	req, reqerr := http.NewRequest(
 		"GET",
 		"https://api.github.com/user",
-		nil
+		nil,
 	)
 	if reqerr != nil {
 		log.Panic("API Request creation failed")
