@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/Raptorik/oAuth/tree/main/mygithubAUTH/handlers"
 	"github.com/joho/godotenv"
-	"handlers/core"
 	"log"
 	"net/http"
 )
@@ -17,17 +17,17 @@ func init() {
 func main() {
 
 	// Simply returns a link to the login route
-	http.HandleFunc("/", core.RootHandler)
+	http.HandleFunc("/", handlers.RootHandler)
 
 	// Login route
-	http.HandleFunc("/login/github/", core.GitGHubLoginHandler)
+	http.HandleFunc("/login/github/", handlers.GitHubLoginHandler)
 
 	// Github callback
-	http.HandleFunc("/login/github/callback", core.GitHubCallbackHandler)
+	http.HandleFunc("/login/github/callback", handlers.GitHubCallbackHandler)
 
 	// Route where the authenticated user is redirected to
 	http.HandleFunc("/loggedin", func(w http.ResponseWriter, r *http.Request) {
-		core.LoggedInHandler(w, r, "")
+		handlers.LoggedInHandler(w, r, "")
 	})
 
 	fmt.Println("[ UP ON PORT 3000 ]")

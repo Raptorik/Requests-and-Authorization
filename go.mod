@@ -1,4 +1,4 @@
-module github.com/Raptorik/Requests-and-Authorization
+module github.com/Raptorik/oAuth/tree/main/mygithubAUTH
 
 go 1.18
 
