@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4d28f95-6d45-4dc2-b085-15d751c5a323" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/mygithubAUTH.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+    <list default="true" id="c4d28f95-6d45-4dc2-b085-15d751c5a323" name="Changes" comment="fixup! first commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/core.go" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/core.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
@@ -27,6 +23,12 @@
   </component>
   <component name="GOROOT" url="file:///usr/lib/go-1.18" />
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--follow-tags" />
+        <option name="title" value="Current Branch" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -65,7 +67,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build github.com/Raptorik/oAuth/tree/main/mygithubAUTH">
-    <configuration name="go build github.com/Raptorik/oAuth/tree/main/mygithubAUTH" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+    <configuration name="go build github.com/Raptorik/oAuth/tree/main/mygithubAUTH" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="mygithubAUTH" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
@@ -112,6 +114,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build github.com/Raptorik/oAuth/tree/main/mygithubAUTH" />
         <item itemvalue="Go Build.go build mygithubAUTH" />
         <item itemvalue="Go Build.go build mygithubAUTH/111" />
         <item itemvalue="Go Build.go build mygithubAUTH/112" />

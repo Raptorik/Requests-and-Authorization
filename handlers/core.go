@@ -16,22 +16,17 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 
 func LoggedInHandler(w http.ResponseWriter, r *http.Request, githubData string) {
 	if githubData == "" {
-		// Unauthorized users get an unauthorized message
 		fmt.Fprintf(w, "UNAUTHORIZED!")
 		return
 	}
 
 	w.Header().Set("Content-type", "application/json")
 
-	// Prettifying the json
 	var prettyJSON bytes.Buffer
-	// json.indent is a library utility function to prettify JSON indentation
 	parserr := json.Indent(&prettyJSON, []byte(githubData), "", "\t")
 	if parserr != nil {
 		log.Panic("JSON parse error")
 	}
-
-	// Return the prettified JSON as a string
 	fmt.Fprintf(w, string(prettyJSON.Bytes()))
 }
 
@@ -45,11 +40,8 @@ func GitHubLoginHandler(w http.ResponseWriter, r *http.Request) {
 
 func GitHubCallbackHandler(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
-
 	githubAccessToken := GetGitHubAccessToken(code)
-
 	githubData := GetGithubData(githubAccessToken)
-
 	LoggedInHandler(w, r, githubData)
 }
 
@@ -61,40 +53,31 @@ func GetGithubData(accessToken string) string {
 
 	authorizationHeaderValue := fmt.Sprintf("token %s", accessToken)
 	req.Header.Set("Authorization", authorizationHeaderValue)
-
 	resp, resperr := http.DefaultClient.Do(req)
 	if resperr != nil {
 		log.Panic("Request failed")
 	}
-
 	respbody, _ := ioutil.ReadAll(resp.Body)
-
 	return string(respbody)
 }
 
 func GetGitHubAccessToken(code string) string {
-
 	clientID := GetGitHubClientID()
 	clientSecret := GetGitHubClientSecret()
-
 	requestBodyMap := map[string]string{"client_id": clientID, "client_secret": clientSecret, "code": code}
 	requestJSON, _ := json.Marshal(requestBodyMap)
-
 	req, reqerr := http.NewRequest("POST", "https://github.com/login/oauth/access_token", bytes.NewBuffer(requestJSON))
 	if reqerr != nil {
 		log.Panic("Request creation failed")
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
-
 	resp, resperr := http.DefaultClient.Do(req)
 	if resperr != nil {
 		log.Panic("Request failed")
 	}
-
 	respbody, _ := ioutil.ReadAll(resp.Body)
 
-	// Represents the response received from GitHub
 	type GitHubAccessTokenResponse struct {
 		AccessToken string `json:"access_token"`
 		TokenType   string `json:"token_type"`
@@ -103,26 +86,21 @@ func GetGitHubAccessToken(code string) string {
 
 	var ghresp GitHubAccessTokenResponse
 	json.Unmarshal(respbody, &ghresp)
-
 	return ghresp.AccessToken
 }
 
 func GetGitHubClientID() string {
-
 	GitHubClientID, exists := os.LookupEnv("CLIENT_ID")
 	if !exists {
 		log.Fatal("Github Client ID not defined in .env file")
 	}
-
 	return GitHubClientID
 }
 
 func GetGitHubClientSecret() string {
-
 	GitHubClientSecret, exists := os.LookupEnv("CLIENT_SECRET")
 	if !exists {
 		log.Fatal("Github Client ID not defined in .env file")
 	}
-
 	return GitHubClientSecret
 }
